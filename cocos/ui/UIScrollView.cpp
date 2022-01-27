@@ -70,6 +70,8 @@ _autoScrollCurrentlyOutOfBoundary(false),
 _autoScrollBraking(false),
 _inertiaScrollEnabled(true),
 _bounceEnabled(false),
+_bounceOffsetX(0.5f),
+_bounceOffsetY(0.5f),
 _outOfBoundaryAmount(Vec2::ZERO),
 _outOfBoundaryAmountDirty(true),
 _scrollBarEnabled(true),
@@ -648,8 +650,8 @@ void ScrollView::scrollChildren(const Vec2& deltaMove)
     {
         // If the position of the inner container is out of the boundary, the offsets should be divided by two.
         Vec2 outOfBoundary = getHowMuchOutOfBoundary();
-        realMove.x *= (outOfBoundary.x == 0 ? 1 : 0.5f);
-        realMove.y *= (outOfBoundary.y == 0 ? 1 : 0.5f);
+        realMove.x *= (outOfBoundary.x == 0 ? 1 : _bounceOffsetX);
+        realMove.y *= (outOfBoundary.y == 0 ? 1 : _bounceOffsetY);
     }
     
     if(!_bounceEnabled)
@@ -1209,6 +1211,27 @@ bool ScrollView::isBounceEnabled() const
     return _bounceEnabled;
 }
 
+void ScrollView::setBounceOffsetX(float offsetX)
+{
+    _bounceOffsetX = offsetX;
+}
+
+void ScrollView::setBounceOffsetY(float offsetY)
+{
+    _bounceOffsetY = offsetY;
+}
+
+void ScrollView::setBounceOffset(float offsetX, float offsetY)
+{
+    _bounceOffsetX = offsetX;
+    _bounceOffsetY = offsetY;
+}
+
+Vec2 ScrollView::getBounceOffset() const
+{
+    return {_bounceOffsetX, _bounceOffsetY};
+}
+
 void ScrollView::setInertiaScrollEnabled(bool enabled)
 {
     _inertiaScrollEnabled = enabled;
@@ -1496,6 +1519,8 @@ void ScrollView::copySpecialProperties(Widget *widget)
         _autoScrollBrakingStartPosition = scrollView->_autoScrollBrakingStartPosition;
         setInertiaScrollEnabled(scrollView->_inertiaScrollEnabled);
         setBounceEnabled(scrollView->_bounceEnabled);
+        setBounceOffsetX(scrollView->_bounceOffsetX);
+        setBounceOffsetY(scrollView->_bounceOffsetY);
         _scrollViewEventListener = scrollView->_scrollViewEventListener;
         _eventCallback = scrollView->_eventCallback;
         _ccEventCallback = scrollView->_ccEventCallback;

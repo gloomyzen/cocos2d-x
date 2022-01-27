@@ -373,6 +373,28 @@ public:
     bool isBounceEnabled() const;
 
     /**
+     * @brief Set the maximal bounce offset by 'x'
+     */
+    void setBounceOffsetX(float offsetX);
+
+    /**
+     * @brief Set the maximal bounce offset by 'y'
+     */
+    void setBounceOffsetY(float offsetY);
+
+    /**
+     * @brief Set the maximal bounce offset by 'x' and 'y'
+     */
+    void setBounceOffset(float offsetX, float offsetY);
+
+    /**
+     * @brief Get the maximal bounce offset
+     *
+     * @return Vec2 of _bounceOffsetX and _bounceOffsetY
+     */
+    Vec2 getBounceOffset() const;
+
+    /**
      * @brief Toggle whether enable scroll inertia while scrolling.
      *
      * @param enabled True if enable inertia, false otherwise.
@@ -668,7 +690,9 @@ protected:
     bool _inertiaScrollEnabled;
 
     bool _bounceEnabled;
-    
+    float _bounceOffsetX;
+    float _bounceOffsetY;
+
     Vec2 _outOfBoundaryAmount;
     bool _outOfBoundaryAmountDirty;
     

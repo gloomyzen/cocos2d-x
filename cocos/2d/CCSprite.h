@@ -187,6 +187,8 @@ public:
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
+    virtual void setDebug(bool) override;
+
     //  end of creators group
     /// @}
 
@@ -624,7 +626,11 @@ CC_CONSTRUCTOR_ACCESS :
 
     virtual void setVertexLayout();
     virtual void updateShaders(const char* vert, const char* frag);
-    
+
+    virtual RenderMode getRenderMode() const;
+    virtual void setCorrectPixelTexture();
+    static void setUsePixelMode(bool value);
+
 protected:
     virtual void updateColor() override;
     virtual void setTextureCoords(const Rect& rect);
@@ -666,9 +672,9 @@ protected:
     backend::UniformLocation _textureLocation;
     backend::UniformLocation _alphaTextureLocation;
         
-#if CC_SPRITE_DEBUG_DRAW
+#if DEBUG
     DrawNode *_debugDrawNode = nullptr;
-#endif //CC_SPRITE_DEBUG_DRAW
+#endif //DEBUG
     //
     // Shared data
     //
