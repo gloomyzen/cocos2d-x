@@ -46,14 +46,13 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-static Texture2D::TexParams pixelTexParams = {
+Texture2D::TexParams Sprite::pixelTexParams = {
     backend::SamplerFilter::NEAREST,            // TextureMinFilter
     backend::SamplerFilter::NEAREST,            // TextureMagFilter
     backend::SamplerAddressMode::CLAMP_TO_EDGE, // TextureWrapMode Horizontal
     backend::SamplerAddressMode::CLAMP_TO_EDGE  // TextureWrapMode Vertical
 };
-
-static bool usePixelMode = false;
+bool Sprite::usePixelModeGlobal = false;
 
 // MARK: create, init, dealloc
 Sprite* Sprite::createWithTexture(Texture2D *texture)
@@ -303,7 +302,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
     return result;
 }
 
-Sprite::Sprite()
+Sprite::Sprite() : usePixelMode(false)
 {
 #if DEBUG
     if (isDebugDraw) {
@@ -1806,12 +1805,16 @@ Sprite::RenderMode Sprite::getRenderMode() const {
 }
 
 void Sprite::setCorrectPixelTexture() {
-    if (getTexture() != nullptr && usePixelMode)
+    if (getTexture() != nullptr && (usePixelModeGlobal || usePixelMode))
         getTexture()->setTexParameters(pixelTexParams);
 }
 
 void Sprite::setUsePixelMode(bool value) {
     usePixelMode = value;
+}
+
+void Sprite::setUsePixelModeGlobal(bool value) {
+    usePixelModeGlobal = value;
 }
 
 NS_CC_END

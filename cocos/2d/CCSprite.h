@@ -629,7 +629,12 @@ CC_CONSTRUCTOR_ACCESS :
 
     virtual RenderMode getRenderMode() const;
     virtual void setCorrectPixelTexture();
-    static void setUsePixelMode(bool value);
+    static void setUsePixelModeGlobal(bool value);
+    void setUsePixelMode(bool value);
+private:
+    static Texture2D::TexParams pixelTexParams;
+    static bool usePixelModeGlobal;
+    bool usePixelMode;
 
 protected:
     virtual void updateColor() override;

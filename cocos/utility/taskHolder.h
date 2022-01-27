@@ -20,7 +20,7 @@ public:
 
 protected:
   /***
-   * Загрузка асинхронных тасков для ноды
+   * Loading nodes with tasks
    * @return std::function<bool()>
    */
   virtual std::deque<nodeTasks> getTasks() = 0;
