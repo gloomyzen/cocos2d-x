@@ -148,6 +148,9 @@ public:
 
     bool getDebug() { return isDebugDraw; }
     virtual void setDebug(bool);
+    virtual void setDebugLineColor(Color4F);
+    virtual Color4F getDebugLineColor();
+
     virtual Node* findNode(const std::string &name);
     /**
      * Gets the description string. It makes debugging easier.

@@ -249,6 +249,17 @@ void Node::setDebug(bool value) {
 #endif
 }
 
+void Node::setDebugLineColor(Color4F color) {
+#ifdef DEBUG
+    _debugColorLine = color;
+    _debugColorPoint = color;
+#endif
+}
+
+Color4F Node::getDebugLineColor() {
+    return _debugColorLine;
+}
+
 Node* Node::findNode(const std::string &name) {
 	if (getName() == name) {
 		return this;
