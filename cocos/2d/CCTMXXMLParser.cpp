@@ -506,11 +506,14 @@ void TMXMapInfo::startElement(void* /*ctx*/, const char *name, const char **atts
         int x = attributeDict["x"].asInt();
         // Y
         int y = attributeDict["y"].asInt();
-        
+
         Vec2 p(x + objectGroup->getPositionOffset().x, _mapSize.height * _tileSize.height - y  - objectGroup->getPositionOffset().y - attributeDict["height"].asInt());
         p = CC_POINT_PIXELS_TO_POINTS(p);
         dict["x"] = Value(p.x);
         dict["y"] = Value(p.y);
+        auto local = CC_POINT_PIXELS_TO_POINTS(Vec2(x, y));
+        dict["localX"] = Value(local.x);
+        dict["localY"] = Value(local.y);
         
         int width = attributeDict["width"].asInt();
         int height = attributeDict["height"].asInt();
