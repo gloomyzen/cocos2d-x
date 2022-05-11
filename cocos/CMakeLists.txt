@@ -148,12 +148,13 @@ if(XCODE OR VS)
     cocos_mark_code_files("cocos2d")
 endif()
 
-if(NOT APPLE OR (APPLE AND XCODE))
-    if(${CMAKE_VERSION} VERSION_GREATER "3.16.0")
-        message("CMake 3.16 target_precompile_headers")
-        target_precompile_headers(cocos2d PRIVATE
-           "$<$<COMPILE_LANGUAGE:CXX>:cocos2d.h>")
+if(${CMAKE_VERSION} VERSION_GREATER "3.16.0")
+    message("CMake 3.16 target_precompile_headers")
+    if(APPLE)
+        enable_language(OBJC OBJCXX)
     endif()
+    target_precompile_headers(cocos2d PRIVATE
+            "$<$<COMPILE_LANGUAGE:CXX>:cocos2d.h>")
 endif()
 
 #if(XCODE)
